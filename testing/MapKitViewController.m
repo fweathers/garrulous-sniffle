@@ -9,6 +9,9 @@
 #import "MapKitViewController.h"
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKShareKit/FBSDKShareKit.h>
+
 
 @interface MapKitViewController ()
 
@@ -34,12 +37,14 @@
     
     //create location manager
     self.locationManager = [[CLLocationManager alloc]init];
+    self.locationManager.delegate = self;
     
     if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)])
     {
         [self.locationManager requestWhenInUseAuthorization];
     }
-}
+    [self.locationManager startUpdatingLocation];
+    }
 
 - (IBAction)pinLocationButtonTapped:(id)sender
 {
@@ -51,11 +56,28 @@
     
     [self.placesVisited addObject:@{@"lat":[NSNumber numberWithDouble:mapPin.coordinate.latitude], @"lng":[NSNumber numberWithDouble:mapPin.coordinate.longitude ]}];
     
-    //
-    //    MKUserLocation *userLocation = self.mapView.userLocation;
-    
-    
     NSLog(@"Pin Location");
+    
+    //facebook share button
+    FBSDKShareLinkContent *content = [[FBSDKShareLinkContent alloc] init];
+    content.contentURL = [NSURL
+                          URLWithString:@"https://www.facebook.com/FacebookDevelopers"];
+    FBSDKShareButton *shareButton = [[FBSDKShareButton alloc] init];
+    shareButton.shareContent = content;
+    shareButton.center = self.view.center;
+    [self.view addSubview:shareButton];
+    
+
+    
+}
+
+- (void)locationManager:(CLLocationManager * _Nonnull)manager
+     didUpdateLocations:(NSArray<CLLocation *> * _Nonnull)locations
+{
+    
+    CLLocationCoordinate2D center = CLLocationCoordinate2DMake(self.locationManager.location.coordinate.latitude, self.locationManager.location.coordinate.longitude);
+    MKCoordinateSpan span = MKCoordinateSpanMake(0.8, 0.8);
+    [self.mapView setRegion:MKCoordinateRegionMake(center, span)];
     
 }
 
