@@ -19,6 +19,7 @@
 
 @property (nonatomic) CLLocationManager *locationManager;
 @property (nonatomic) NSMutableArray *placesVisited;
+@property (weak, nonatomic) IBOutlet UIButton *pinLocationButton;
 
 
 @end
@@ -28,6 +29,31 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    // border radius
+    [self.mapView.layer setCornerRadius:30.0f];
+    
+
+    
+    // border
+    [self.mapView.layer setBorderColor:[UIColor lightGrayColor].CGColor];
+    [self.mapView.layer setBorderWidth:1.5f];
+    
+    [self.pinLocationButton.layer setBorderColor:[UIColor lightGrayColor].CGColor];
+    [self.pinLocationButton.layer setBorderWidth:1.5f];
+    
+    // drop shadow
+    [self.mapView.layer setShadowColor:[UIColor blackColor].CGColor];
+    [self.mapView.layer setShadowOpacity:0.8];
+    [self.mapView.layer setShadowRadius:3.0];
+    [self.mapView.layer setShadowOffset:CGSizeMake(2.0, 2.0)];
+    
+    [self.pinLocationButton.layer setShadowColor:[UIColor blackColor].CGColor];
+    [self.pinLocationButton.layer setShadowOpacity:0.8];
+    [self.pinLocationButton.layer setShadowRadius:3.0];
+    [self.pinLocationButton.layer setShadowOffset:CGSizeMake(2.0, 2.0)];
+
+    
     
 //    self.placesVisited = [[NSMutableArray alloc]init];
     
