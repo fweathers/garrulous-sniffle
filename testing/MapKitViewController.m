@@ -29,11 +29,14 @@
 {
     [super viewDidLoad];
     
-    self.placesVisited = [[NSMutableArray alloc]init];
+//    self.placesVisited = [[NSMutableArray alloc]init];
     
-        CLLocationCoordinate2D center = CLLocationCoordinate2DMake(40.7, -74);
-        MKCoordinateSpan span = MKCoordinateSpanMake(0.8, 0.8);
-        [self.mapView setRegion:MKCoordinateRegionMake(center, span)];
+    self.placesVisited = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"destinations"]];
+    
+    
+    CLLocationCoordinate2D center = CLLocationCoordinate2DMake(40.7, -74);
+    MKCoordinateSpan span = MKCoordinateSpanMake(0.8, 0.8);
+    [self.mapView setRegion:MKCoordinateRegionMake(center, span)];
     
     //create location manager
     self.locationManager = [[CLLocationManager alloc]init];
@@ -44,7 +47,34 @@
         [self.locationManager requestWhenInUseAuthorization];
     }
     [self.locationManager startUpdatingLocation];
+    
+    [self reloadPins];
+
+}
+
+- (void)reloadPins
+{
+    //reload pins
+    
+    if (self.placesVisited.count != 0)
+    {
+        
+        for (int i = 0; i < self.placesVisited.count; i ++)
+        {
+            NSLog(@"%lu", self.placesVisited.count);
+            MKPointAnnotation *mapPin = [[MKPointAnnotation alloc]init];
+            mapPin.title = @"The Location";
+            //    mapPin.subtitle = @"Sub-title";
+            
+            NSDictionary *coordinates = [self.placesVisited objectAtIndex:i];
+            mapPin.coordinate = CLLocationCoordinate2DMake([[coordinates objectForKey:@"lat"] doubleValue],[[coordinates objectForKey:@"lng"] doubleValue]);
+            [self.mapView addAnnotation:mapPin];
+            
+            NSLog(@"reprint pins");
+
+        }
     }
+}
 
 - (IBAction)pinLocationButtonTapped:(id)sender
 {
@@ -58,6 +88,10 @@
     
     NSLog(@"Pin Location");
     
+    [[NSUserDefaults standardUserDefaults] setObject:self.placesVisited forKey:@"destinations"];
+    NSLog(@"Data Saved");
+    
+
     //facebook share button
     FBSDKShareLinkContent *content = [[FBSDKShareLinkContent alloc] init];
     content.contentURL = [NSURL
@@ -66,8 +100,6 @@
     shareButton.shareContent = content;
     shareButton.center = self.view.center;
     [self.view addSubview:shareButton];
-    
-
     
 }
 
@@ -80,35 +112,5 @@
     [self.mapView setRegion:MKCoordinateRegionMake(center, span)];
     
 }
-
-//- (void)addMapAnnotationForLocation: (CLLocation *)currentLocation
-//{
-//
-//    MKPointAnnotation *mapPin = [[MKPointAnnotation alloc]init];
-//
-////    double lat = [currentLocation[@"location"][@"lat"] doubleValue];
-////    double lng = [currentLocation[@"location"][@"lng"] doubleValue];
-//
-//    // Added array of dictionaries with coordinates
-//    //NSDictionary *coordinates = @{ @"lat" : [NSNumber numberWithDouble:lat],
-//                                   @"lng" : [NSNumber numberWithDouble:lng]
-//                                   };
-//    // dictionaries will store each place visited in array
-//    [self.placesVisited addObject:coordinates];
-//
-//    //CLLocationCoordinate2D latLng = CLLocationCoordinate2DMake(lat,lng);
-//
-//    mapPin.title = @"The Location";
-//    mapPin.subtitle = @"Sub-title";
-//     [self.mapView addAnnotation:mapPin];
-//
-//
-//    mapPin.coordinate = latLng;
-////
-////    [self.mapView addAnnotation:mapPin];
-////    NSLog(@"pin added");
-//
-//
-//}
 
 @end
