@@ -32,7 +32,8 @@
     
     // border radius
     [self.mapView.layer setCornerRadius:30.0f];
-    
+    [self.pinLocationButton.layer setCornerRadius:30.0f];
+
 
     
     // border

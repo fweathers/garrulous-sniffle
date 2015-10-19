@@ -84,12 +84,14 @@
                                 <rect key="frame" x="0.0" y="20" width="600" height="580"/>
                                 <animations/>
                             </mapView>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="46F-Bp-eNz">
-                                <rect key="frame" x="257" y="560" width="86" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="46F-Bp-eNz">
+                                <rect key="frame" x="275" y="540" width="50" height="50"/>
                                 <animations/>
-                                <color key="backgroundColor" red="0.22145792617600851" green="0.79399463383838387" blue="0.17393553884096852" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
-                                <state key="normal" title="Pin Location">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="XCq-kY-Vd0"/>
+                                    <constraint firstAttribute="height" constant="50" id="v7Z-G3-tFY"/>
+                                </constraints>
+                                <state key="normal" title="Pin Location" image="pin">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -132,4 +134,7 @@
             <point key="canvasLocation" x="561" y="460"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="pin" width="512" height="411"/>
+    </resources>
 </document>
