@@ -106,9 +106,12 @@
 - (IBAction)pinLocationButtonTapped:(id)sender
 {
     MKPointAnnotation *mapPin = [[MKPointAnnotation alloc]init];
-    mapPin.title = @"The Location";
+//    mapPin.title = @"The Location";
     //    mapPin.subtitle = @"Sub-title";
     mapPin.coordinate = CLLocationCoordinate2DMake(self.locationManager.location.coordinate.latitude, self.locationManager.location.coordinate.longitude);
+    self.mapView.zoomEnabled = true;
+    self.mapView.scrollEnabled = true;
+    
     [self.mapView addAnnotation:mapPin];
     
     [self.placesVisited addObject:@{@"lat":[NSNumber numberWithDouble:mapPin.coordinate.latitude], @"lng":[NSNumber numberWithDouble:mapPin.coordinate.longitude ]}];
